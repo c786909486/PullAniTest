@@ -1,6 +1,5 @@
 package com.axun.pullanitest;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
@@ -56,8 +55,8 @@ public class QQHeaderView extends FrameLayout implements IHeaderView {
 
     @Override
     public void onPullingDown(float fraction, float maxHeadHeight, float headHeight) {
-
-        qqView.setHeight((int) (fraction*headHeight));
+        Log.d("Header","下拉");
+        qqView.setCircleHeight((int) (fraction*headHeight));
         height = (int) (fraction*headHeight);
         if (fraction>1f){
             tvGo.setVisibility(VISIBLE);
@@ -68,26 +67,30 @@ public class QQHeaderView extends FrameLayout implements IHeaderView {
 
     @Override
     public void onPullReleasing(float fraction, float maxHeadHeight, float headHeight) {
-        Log.d("Header","maxHeader:"+maxHeadHeight+"\ncurrentHeader:"+headHeight+"\nfraction"+fraction*headHeight);
-        qqView.setHeight((int) (fraction*headHeight));
+        Log.d("Header","松手");
+//        Log.d("Header","maxHeader:"+maxHeadHeight+"\ncurrentHeader:"+headHeight+"\nfraction"+fraction*headHeight);
+        qqView.setCircleHeight((int) (fraction*headHeight));
     }
 
     @Override
     public void startAnim(float maxHeadHeight, float headHeight) {
-
+        Log.d("Header","开始动画");
     }
 
     @Override
     public void onFinish(OnAnimEndListener animEndListener) {
-        ValueAnimator animator = ValueAnimator.ofInt(height,0);
-        int value = (int) animator.getAnimatedValue();
-        qqView.setHeight(value);
-        animator.setDuration(5000);
-        animator.start();
+//        ValueAnimator animator = ValueAnimator.ofInt(height,0);
+//        int value = (int) animator.getAnimatedValue();
+//        qqView.setCircleHeight(value);
+//
+//        animator.setDuration(500);
+//        animator.start();
+
+        animEndListener.onAnimEnd();
     }
 
     @Override
     public void reset() {
-        qqView.setHeight(0);
+        qqView.setCircleHeight(0);
     }
 }

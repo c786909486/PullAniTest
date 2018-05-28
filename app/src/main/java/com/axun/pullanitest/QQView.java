@@ -9,11 +9,14 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.lcodecore.tkrefreshlayout.IHeaderView;
+import com.lcodecore.tkrefreshlayout.OnAnimEndListener;
+
 /**
  * Created by hz-java on 2018/5/28.
  */
 
-public class QQView extends View {
+public class QQView extends View implements IHeaderView{
 
     private Paint paint;//画笔
     private Paint textPaint;//.
@@ -24,9 +27,15 @@ public class QQView extends View {
 
     private Context context;
 
-    public void setHeight(int height) {
+    public void setCircleHeight(int height) {
         this.height = height;
         postInvalidate();
+    }
+
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     public QQView(Context context) {
@@ -64,4 +73,34 @@ public class QQView extends View {
     }
 
 
+    @Override
+    public View getView() {
+        return this;
+    }
+
+    @Override
+    public void onPullingDown(float fraction, float maxHeadHeight, float headHeight) {
+        height = (int) (fraction*headHeight);
+        invalidate();
+    }
+
+    @Override
+    public void onPullReleasing(float fraction, float maxHeadHeight, float headHeight) {
+
+    }
+
+    @Override
+    public void startAnim(float maxHeadHeight, float headHeight) {
+
+    }
+
+    @Override
+    public void onFinish(OnAnimEndListener animEndListener) {
+        animEndListener.onAnimEnd();
+    }
+
+    @Override
+    public void reset() {
+
+    }
 }
